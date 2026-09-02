@@ -270,7 +270,7 @@ OCCT = x86
 
 ~~~bash
 sudo apt update
-sudo apt install -y build-essential cmake ninja-build libocct-foundation-dev libocct-modeling-data-dev libocct-modeling-algorithms-dev
+sudo apt install -y build-essential cmake ninja-build libtbb-dev libocct-foundation-dev libocct-modeling-data-dev libocct-modeling-algorithms-dev
 ~~~
 
 配置：
@@ -291,7 +291,7 @@ cmake --build study/build -j
 ./study/build/bin/day1_hello_occ
 ~~~
 
-Ubuntu / Debian 会把 OpenCASCADEConfig.cmake 放到系统 CMake package 路径中，通常 find_package 可以直接找到。
+Ubuntu / Debian 会把 OpenCASCADEConfig.cmake 放到系统 CMake package 路径中，通常 find_package 可以直接找到。这里显式安装 `libtbb-dev` 是因为 Ubuntu 24.04 的 OCCT 7.6 CMake 导出目标会引用开发版 `libtbb.so` 链接名；只安装运行时 `libtbb12` 可能出现 `libtbb.so ... missing` 的构建错误。
 
 如果你的发行版路径不同，可以查：
 
