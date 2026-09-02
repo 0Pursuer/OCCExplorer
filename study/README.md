@@ -270,7 +270,7 @@ OCCT = x86
 
 ~~~bash
 sudo apt update
-sudo apt install -y build-essential cmake ninja-build libtbb-dev libocct-foundation-dev libocct-modeling-data-dev libocct-modeling-algorithms-dev
+sudo apt install -y build-essential cmake ninja-build libtbb-dev libocct-foundation-dev libocct-modeling-data-dev libocct-modeling-algorithms-dev libocct-visualization-dev
 ~~~
 
 配置：
@@ -291,7 +291,7 @@ cmake --build study/build -j
 ./study/build/bin/day1_hello_occ
 ~~~
 
-Ubuntu / Debian 会把 OpenCASCADEConfig.cmake 放到系统 CMake package 路径中，通常 find_package 可以直接找到。这里显式安装 `libtbb-dev` 是因为 Ubuntu 24.04 的 OCCT 7.6 CMake 导出目标会引用开发版 `libtbb.so` 链接名；只安装运行时 `libtbb12` 可能出现 `libtbb.so ... missing` 的构建错误。
+Ubuntu / Debian 会把 OpenCASCADEConfig.cmake 放到系统 CMake package 路径中，通常 find_package 可以直接找到。这里显式安装 `libtbb-dev` 是因为 Ubuntu 24.04 的 OCCT 7.6 CMake 导出目标会引用开发版 `libtbb.so` 链接名；只安装运行时 `libtbb12` 可能出现 `libtbb.so ... missing` 的构建错误。\n\n另外，Ubuntu 24.04 / Debian 的 OCCT 7.6.3 打包存在一个已知头文件归属问题：`Poly_ArrayOfNodes.hxx` 需要 `NCollection_AliasedArray.hxx`，但后者被错误放进了 `libocct-visualization-dev`。因此上面的命令额外安装 `libocct-visualization-dev`。**这只是发行版 7.6 包的 workaround，并不代表 Day 1 / Day 2 使用了 OCCT Visualization 模块。**较新的 Debian/OCCT 打包已修复这个问题。
 
 如果你的发行版路径不同，可以查：
 
